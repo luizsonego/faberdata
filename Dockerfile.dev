@@ -1,0 +1,17 @@
+FROM php:7.4-apache
+
+RUN a2enmod rewrite
+
+RUN apt-get update \
+  # install GraphicsMagick
+  && apt-get install -y \
+  libgraphicsmagick1-dev graphicsmagick zlib1g-dev libicu-dev gcc g++ --no-install-recommends \
+  && pecl -vvv install gmagick-beta && docker-php-ext-enable gmagick \
+  # pdo_mysql
+  && docker-php-ext-install pdo_mysql \
+  # intl
+  && docker-php-ext-configure intl && docker-php-ext-install intl \
+  # cleanup
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ADD . /var/www/html

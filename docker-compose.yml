@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  apache:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: 'php:7.4-apache'
+    container_name: php
+    restart: always
+    ports:
+      - '8000:80'
+    volumes:
+      - ./html:/var/www/html
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
+    networks:
+      - "php-general"
+    # extra_hosts:
+    #   - "host.docker:127.0.0.1"
+
+  mysqldb:
+    container_name: mysqlTASK
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - /var/lib/mysql
+      - ./dump:/docker-entrypoint-initdb.d
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Tasks
+    networks:
+      - "php-general"
+
+networks:
+  php-general:
+    driver: "bridge"

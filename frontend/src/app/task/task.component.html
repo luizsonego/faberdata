@@ -1,0 +1,55 @@
+<div class="my-2">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <input id="id" type="text" name="id" class="form-control" [(ngModel)]="id" hidden>
+    <div class="mb-3">
+      <label for="title" class="form-label">Titulo</label>
+      <input id="title" type="text" name="title" class="form-control" [(ngModel)]="title">
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Descrição</label>
+      <input id="description" type="text" name="description" class="form-control" [(ngModel)]="description">
+    </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select name="status" id="status" [(ngModel)]="status" class="form-control">
+        <option value="Inativo">Inativo</option>
+        <option value="Ativo">Ativo</option>
+        <option value="Finalizado">Finalizado</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="timelimit" class="form-label">Tempo</label>
+      <input id="timelimit" type="date" name="timelimit" class="form-control" [(ngModel)]="timelimit">
+    </div>
+    <input class="btn btn-success" type="submit" [value]="isEditing ? 'Salvar Tarefa' : 'Criar Nova tarefa'" />
+  </form>
+</div>
+<br>
+
+<table class="table table-bordered table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Titulo</th>
+      <th>Descrição</th>
+      <th>Status</th>
+      <th>Tempo limite</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{task.title}}</td>
+      <td>{{task.description}}</td>
+      <td>{{task.status}}</td>
+      <td>{{task.timelimit}}</td>
+      <td>
+        <button class="btn btn-sm btn-info" (click)="editTask(task)">
+          Editar
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="deleteTask(task)">
+          Excluir
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

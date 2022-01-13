@@ -44,7 +44,7 @@ O docker esta criando tambem  uma tabela com nome de ```tasks``` que esta na pas
 
 # 
 
-As rotas api sao as seguintes:
+As rotas de requisiçao da api sao as seguintes:
 
 * Criar um registro
 ```
